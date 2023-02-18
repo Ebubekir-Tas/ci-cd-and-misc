@@ -1,7 +1,7 @@
 version: 2.1
 
 jobs:
-  unit_test:
+  test:
     docker:
       - image: circleci/node:14
     steps:
@@ -10,10 +10,10 @@ jobs:
       - run: npm test
 
 workflows:
-  build-and-test:
+  version: 2
+  test:
     jobs:
-      - unit_test
-        filters:
-          branches:
-            only: main
-
+      - test:
+          filters:
+            branches:
+              only: main
