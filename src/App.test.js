@@ -11,7 +11,7 @@ test('clicking button increments number by 1', () => {
   const clickValue = screen.getByText('Click Me: 1');
   expect(clickValue).toBeInTheDocument();
 
-  // this should fail
-  const incorrectValue = screen.getByText('Click Me: 99');
-  expect(incorrectValue).toBeInTheDocument();
+  // // this should fail
+  // const incorrectValue = screen.getByText('Click Me: 99');
+  // expect(incorrectValue).toBeInTheDocument();
 });
