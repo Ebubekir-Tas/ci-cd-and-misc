@@ -1,29 +1,16 @@
-version: 2
+name: CI
+on:
+  pull_request:
+    branches:
+      - main
 jobs:
-  test:
-    name: Test job
-    docker:
-      - image: circleci/node:14
+  ci:
+    runs-on: ubuntu-latest
     steps:
-      - checkout
-      - restore_cache:
-          keys:
-            - dependencies-{{ checksum "package.json" }}
-            - dependencies-
-      - run: npm install
-      - save_cache:
-          paths:
-            - node_modules
-          key: dependencies-{{ checksum "package.json" }}
-      - run: npm test
-
-workflows:
-  version: 2
-  unit_test:
-    jobs:
-      - test:
-          filters:
-            branches:
-              only: main
-      - approval:
-          type: approval
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
+      with:
+        node-version: lts/*
+        cache: 'npm'
+    - run: npm install
+    - run: npm test
