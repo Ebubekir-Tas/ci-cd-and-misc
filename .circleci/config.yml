@@ -1,5 +1,4 @@
-version: 2.1
-
+version: 2
 jobs:
   test:
     docker:
@@ -17,6 +16,11 @@ workflows:
           filters:
             branches:
               only: main
+  pull_request:
+    jobs:
+      - test:
+          filters:
+            branches:
+              only: main
             pull_requests:
-              branches:
-                only: main
+              types: [opened, synchronize]
