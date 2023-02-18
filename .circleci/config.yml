@@ -10,17 +10,11 @@ jobs:
 
 workflows:
   version: 2
-  test:
+  main_branch:
     jobs:
       - test:
           filters:
             branches:
               only: main
-  pull_request:
-    jobs:
-      - test:
-          filters:
-            branches:
-              only: main
-            pull_requests:
-              types: [opened, synchronize]
+      - approval:
+          type: approval
