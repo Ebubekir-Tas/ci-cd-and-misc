@@ -6,20 +6,16 @@ jobs:
       - image: circleci/node:14
     steps:
       - checkout
-      - restore_cache:
-          keys:
-            - dependencies-{{ checksum "package.json" }}
-            - dependencies-
+      - restore cache:
+      keys:
+        - dependencies-{{ checksum "package.json" }}
+        - dependencies-
       - run: npm install
-      - save_cache:
-          paths:
-            - node_modules
-          key: dependencies-{{ checksum "package.json" }}
+      _save_cache:
+        paths:
+          - node_modules
+        key: dependencies-{{ checksum "package.json" }}
       - run: npm test
-
-  approval:
-    name: Approval job
-    type: approval
 
 workflows:
   version: 2
@@ -29,10 +25,5 @@ workflows:
           filters:
             branches:
               only: main
-
-  approve_changes:
-    jobs:
       - approval:
-          filters:
-            branches:
-              only: /.*/
+          type: approval
