@@ -17,3 +17,6 @@ workflows:
           filters:
             branches:
               only: main
+            pull_requests:
+              branches:
+                only: main
