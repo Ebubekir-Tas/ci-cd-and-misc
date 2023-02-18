@@ -1,4 +1,5 @@
-version: 2
+version: 2.1
+
 jobs:
   test:
     name: Test job
@@ -17,6 +18,13 @@ jobs:
           key: dependencies-{{ checksum "package.json" }}
       - run: npm test
 
+  pull_request_approval:
+    name: Pull request approval
+    type: approval
+    filters:
+      branches:
+        ignore: /.*/
+
 workflows:
   version: 2
   unit_test:
@@ -25,5 +33,6 @@ workflows:
           filters:
             branches:
               only: main
-      - approval:
-          type: approval
+      - pull_request_approval:
+          requires:
+            - test
