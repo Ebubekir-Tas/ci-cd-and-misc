@@ -13,3 +13,6 @@ workflows:
   build-and-test:
     jobs:
       - unit_test
+        filters:
+          branches:
+            only: main
