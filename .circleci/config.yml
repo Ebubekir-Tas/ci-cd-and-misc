@@ -2,37 +2,24 @@ version: 2.1
 
 jobs:
   test:
-    name: Test job
     docker:
       - image: circleci/node:14
     steps:
       - checkout
-      - restore_cache:
-          keys:
-            - dependencies-{{ checksum "package.json" }}
-            - dependencies-
       - run: npm install
-      - save_cache:
-          paths:
-            - node_modules
-          key: dependencies-{{ checksum "package.json" }}
       - run: npm test
-
-  pull_request_approval:
-    name: Pull request approval
-    type: approval
-    filters:
-      branches:
-        ignore: /.*/
 
 workflows:
   version: 2
-  unit_test:
+  main:
     jobs:
       - test:
           filters:
             branches:
               only: main
-      - pull_request_approval:
+      - approval:
           requires:
             - test
+          filters:
+            branches:
+              only: /.*/
