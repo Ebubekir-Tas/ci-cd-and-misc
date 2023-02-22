@@ -11,9 +11,15 @@ jobs:
 
 workflows:
   version: 2
-  test:
+  test_and_merge:
     jobs:
       - test:
+          filters:
+            branches:
+              only: /^(?!main$).*/  # run on all branches except main
+      - approve_merge:
+          requires:
+            - test
           filters:
             branches:
               only: main
